@@ -8,3 +8,9 @@ chrony_ntp_servers:
 chrony_pkg_state: "latest"
 chrony_pkg_update_cache: "yes"
 chrony_remove_ntp: False
+
+# populate chrony_allow_deny to also have chrony serve time
+chrony_allow_deny:
+ - ""
+ #- "deny 10.0.9.0/24"
+ #- "allow 10.0.0.0/8"
