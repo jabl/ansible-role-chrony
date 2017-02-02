@@ -1,6 +1,5 @@
 chrony_package_info:
       state: "{{ chrony_pkg_state }}"
-      update_cache: "{{ chrony_pkg_update_cache }}"
       cache_valid_time: 600
 
 chrony_pre_pkgs: []
