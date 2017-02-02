@@ -1,8 +1,8 @@
 ---
-chrony_pre_pkgs:
-    - "ca-certificates"
-    - "epel-release"
-    - "libselinux-python"
+chrony_pre_pkgs: []
+#    - "ca-certificates"
+#    - "epel-release"
+#    - "libselinux-python"
 chrony_pkgs:
     - "chrony"
 
