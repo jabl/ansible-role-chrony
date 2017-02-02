@@ -16,16 +16,24 @@
         - ../vars
 
 - name: ensure ntp package is absent
-  package: name=ntp state=absent
+  package:
+    name: ntp
+    state: absent
   when: chrony_remove_ntp
 
 - name: ensure chrony requirements packages are installed
-  package: name={{ item }} state={{ chrony_pkg_state }}
+  package:
+    name: "{{ item }}"
+    state: "{{ chrony_pkg_state }}"
+    update_cache: "{{ chrony_pkg_update_cache }}"
   with_items: "{{ chrony_pre_pkgs }}"
   when: chrony_pre_pkgs|length > 0
 
 - name: ensure chrony packages are installed
-  package: name={{ item }} state={{ chrony_pkg_state }} 
+  package:
+    name: "{{ item }}"
+    state: "{{ chrony_pkg_state }}"
+    update_cache: "{{ chrony_pkg_update_cache }}"
   with_items: "{{ chrony_pkgs }}"
   when: chrony_pkgs|length > 0
 
@@ -40,14 +48,14 @@
   register: chrony_conf
 
 - name: ensure chrony service is started and enabled
-  service: 
+  service:
     name: "{{ chrony_service_info.name }}"
     enabled: yes
     state: started 
     pattern: chronyd
 
 - name: ensure chrony service is restarted if necessary
-  service: 
+  service:
     name: "{{ chrony_service_info.name }}"
     state: restarted 
     pattern: chronyd
