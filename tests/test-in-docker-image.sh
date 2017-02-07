@@ -120,7 +120,11 @@ function test_playbook(){
 function extra_tests(){
 
 	echo "TEST: cat chrony.conf"
-	cat /etc/chrony.conf
+	if [[ $OS_TYPE == *"ubuntu"* ]]; then
+		cat /etc/chrony/chrony.conf
+        else
+		cat /etc/chrony.conf
+ 	fi
 }
 
 
