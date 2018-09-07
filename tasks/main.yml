@@ -45,16 +45,22 @@
     backup: yes
   register: chrony_conf
 
+# ansible service module has problem with chroots, #21026
+- name: ensure chrony service is enabled on chroots
+  command: systemctl enable "{{ chrony_service_info.name }}"
+  when: ansible_connection == 'chroot'
+
 - name: ensure chrony service is started and enabled
   service:
     name: "{{ chrony_service_info.name }}"
     enabled: yes
-    state: started 
+    state: started
     pattern: chronyd
+  when: ansible_connection != 'chroot'
 
 - name: ensure chrony service is restarted if necessary
   service:
     name: "{{ chrony_service_info.name }}"
-    state: restarted 
+    state: restarted
     pattern: chronyd
-  when: chrony_conf|changed
+  when: (chrony_conf is changed) and (ansible_connection != 'chroot')
